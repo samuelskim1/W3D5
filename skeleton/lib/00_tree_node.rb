@@ -12,6 +12,7 @@ class PolyTreeNode
             @parent = par 
             par.children << self if !par.children.include?(self) 
         end 
+       
     end 
 
 end
