@@ -44,7 +44,17 @@ class KnightPathFinder
     end 
 
     def build_move_tree 
-        
+        queue = [@root_node]
+        until queue.empty? 
+            element = queue.shift  
+            children =  self.new_move_positions(element.value)
+            child_knights = children.map{|child|PolyTreeNode.new(child)}
+            child_knights.each do |knight| 
+                    knight.parent = element
+                     element.add_child(knight)
+                     queue << knight 
+            end  
+        end
     end 
 
 
