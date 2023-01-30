@@ -13,12 +13,15 @@ class KnightPathFinder
         combos = [] 
        x = [-2, -1, 1, 2]
        y = [-2, -1, 1, 2]
-
+     
        x.each_with_index do |el1,i1| 
         y.each_with_index do |el2,i2| 
-           combos << [el1,el2] if i2>i1 
+           combos << [el1,el2] if el1.abs != el2.abs
+           
+        
         end 
-        end 
+       end 
+      
         poss_combs = [] 
         combos.each do |position| 
             new_pos =[]
@@ -56,6 +59,36 @@ class KnightPathFinder
             end  
         end
     end 
+
+    def find_path(end_pos)
+        self.build_move_tree
+
+        queue = [@root_node]
+        until queue.empty?
+            element = queue.shift
+            return self.trace_path_back(element) if element.value == end_pos
+            
+            element.children.each do |child|
+                queue << child
+            end
+
+
+        end
+
+        return "Not a valid position"
+
+    end
+
+    def trace_path_back(node)
+        path = []
+
+        until path[0] == @root_node.value
+            path.unshift(node.value)
+            node = node.parent
+        end
+
+        path
+    end
 
 
 end 
